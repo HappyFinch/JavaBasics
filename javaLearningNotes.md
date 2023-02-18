@@ -119,3 +119,179 @@ public class PersonTester {
 }
 ```
 
+## 多态
+> 多态性是对象具有多种形式的能力
+```java
+public class Vehicle {
+    protected String start;
+    protected String stop;
+    protected String speed;
+    protected String direction;
+
+    public Vehicle(String start, String stop, String speed, String direction) {
+        this.start = start;
+        this.stop = stop;
+        this.speed = speed;
+        this.direction = direction;
+    }
+
+    public void start() {
+        System.out.println(start);
+    }
+
+    public void stop() {
+        System.out.println(stop);
+    }
+
+    public void speed() {
+        System.out.println(speed);
+    }
+
+    public void direction() {
+        System.out.println(direction);
+    }
+
+}
+```
+```java
+public class Car extends Vehicle {
+
+    public Car() {
+        // Notice we are passing our arguments into our superclass (Vehicle) constructor
+        super("Car start", "Car stop", "Car speed", "Car direction");
+    }
+
+}
+public class Boat extends Vehicle {
+
+    public Boat() {
+        // Notice we are passing our arguments into our superclass (Vehicle) constructor
+        super("Boat start", "Boat stop", "Boat speed", "Boat direction");
+    }
+}
+```
+```java
+public class Plane extends Vehicle {
+
+    public Plane() {
+        // Notice we are passing our arguments into our superclass (Vehicle) constructor
+        super("Plane start", "Plane stop", "Plane speed", "Plane direction");
+    }
+
+}
+```
+```java
+public class VehicleTester {
+
+    public static void main(String[] args) {
+        // We can create an array of vehicles
+        Vehicle[] vehicles = new Vehicle[3];
+
+        // Add a Car, Plane and Boat objects to the array
+        // Instantiate three new objects and add them to the array.
+// It looks like these are all different types (Car, Plane, and Boat),
+// but they all inherit from the Vehicle class, so in addition to the types
+// they get from their subclasses, they are also all Vehicle objects.
+        vehicles[0] = new Car();
+        vehicles[1] = new Plane();
+        vehicles[2] = new Boat();
+
+        for (int i = 0; i < vehicles.length; i++) {
+            Vehicle vehicle = vehicles[i];
+            vehicle.speed();
+        }
+    }
+}
+```
+
+## 抽象类
+> 它定义了每个子类的行为，但我们不能直接实例化抽象类本身。它允许我们创建抽象方法。抽象方法是不包含实现主体的方法。相反，它只是为该方法提供一个标头。扩展抽象类的子类需要覆盖所有抽象方法并提供特定的实现。
+```java
+public abstract class Vehicle {
+    protected String start;
+    protected String stop;
+    protected String direction;
+
+    public Vehicle(String start, String stop,
+                                  String direction) {
+        this.start = start;
+        this.stop = stop;
+        this.direction = direction;
+    }
+
+    public abstract void speed();   
+}
+```
+```java
+public class Car extends Vehicle {
+
+    public Car() {
+    super("Car start", "Car stop", "Car direction");
+    }
+    @Override
+    public void speed() {
+        System.out.println("55");
+    }
+}
+```
+
+## 接口
+### **抽象类**
+* 可以有类变量。
+* 可以具有与子类共享的抽象方法和具体方法。
+* 可以有实例变量，即特定于各个子类的变量。
+* 子类只能扩展一个类。
+### **接口**
+- 可以有类变量。
+- 接口中的每个方法都是抽象的。
+- 不能有实例变量。对于实现该接口的每个类，接口中的变量必须相同。
+- 类可以实现多个接口并具有多重继承。
+
+### **何时使用接口:**
+- 我们期望不相关的类将实现我们的接口。
+- 我们要支持多重继承。
+- 我们想要指定数据类型的行为，但我们不关心实现。
+```java
+public interface Vehicle {
+
+    public String getType();
+
+    public String getSpeed();
+
+    public String getColor();
+}
+```
+```java
+public class Car implements Vehicle, Production {
+    private String type;
+    private String speed;
+    private String color;
+
+    public Car(String type, String speed, String color) {
+        super();
+        this.type = type;
+        this.speed = speed;
+        this.color = color;
+    }
+
+    @Override
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public String getSpeed() {
+        return speed;
+    }
+
+    @Override
+    public String getColor() {
+        return color;
+    }
+
+     @Override
+    public void getProduction() {
+        System.out.println("Production: " + "China");
+    }
+}
+```
