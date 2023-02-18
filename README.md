@@ -1,0 +1,2 @@
+# JavaBasics
+记录一些我在学习java过程中的一些有用的notes
