@@ -113,7 +113,95 @@ line
 Java 还有两个其他类:BufferedReader和Console，可用于从命令行读取用户输入。如果您想了解更多信息，可以查看这篇关于从控制台读取用户输入的三种方法的文章。https://www.codejava.net/java-se/file-io/3-ways-for-reading-input-from-the-user-in-the-console
 
 ## Dates 和 Calendar
+The Date Class
+> The Date class represents a specific instance in time. We can instantiate a new Date object like so:
+```
+Date date = new Date();
+```
+
+The Calendar Class
+> The Calendar class is an **abstract** class that provides methods for manipulating date and time. The basic syntax for instantiating a new Calendar object looks like this:
+```
+Calendar calendar = Calendar.getInstance();
+```
+
+**Additional Resources**
+Java has some other classes— ```LocalDate, LocalTime, and LocalDateTime```—that can be used to manipulate dates. [you can read about them in the official documentation here](https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html).
+
+- You can use the **Calendar** class to get the current date, and to set the date.
+- Typically, dates are stored in the **Date** class.
+- The **calendar.setTime(date)**; and **calendar.getTime()** can be used - to go back and forth between the Date and Calendar classes.
+- Note: You can use ```SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");``` to change the format of dates
+
+```java
+public class DatesAndCalendar {
+
+    public static void main(String[] args) {
+        DatesAndCalendar.displayCurrentDate();
+        DatesAndCalendar.displaySetDate();
+    }
+
+    private static void displayCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        System.out.println(calendar);
+        Date date = new java.util.Date();
+        calendar.setTime(date);
+        System.out.println(calendar.getTime());
+    }
+
+    private static void displaySetDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2031, 02, 02);
+        Date date = calendar.getTime();
+
+        System.out.println(date);
+    }
+}
+
+```
 
 ## 正则表达式 (RegEx)
 
+**Syntax Example（email）**
+First, we start by defining a **String** for a valid email address using a regular expression:
+```java
+String emailRegex = "^(.+)@(.+).(.+)$"
+```
+Next we use **Pattern**, which provides a compiled instance of a String regular expression:
+```java
+Pattern pattern = Pattern.compile(emailRegex)
+```
+
+Finally, we use ***Matcher***, which contains all of the state data for matching a character sequence against the Pattern:
+```java
+Matcher matcher = pattern.matcher("jeff@example.com")
+```
+```java
+public class RegExTester {
+
+  public static void main(String[] args){
+      String emailRegex = "^(.+)@(.+).(.+)$";
+      Pattern pattern = Pattern.compile(emailRegex);
+      String email = "jeff@gmail.com";
+
+      System.out.println(pattern.matcher(email).matches());
+  }
+}
+```
+
 ## 高级String
+### String Method
+Java 通过使用字符串池为字符串对象提供高级内存管理。字符串池是一种只存储一个字符串副本的方法。
+
+要理解这一点，我们必须查看在创建字符串并将它们分配给变量时内存中发生了什么。Java 中的字符串是不可变的，这意味着它们在创建后无法更改。当我们“更改”变量中的 String 时，实际发生的是，在幕后，Java 在 String 池中创建了一个新的 String——并更改变量的引用值以指向这个新的 String。旧的 String 对象可能会保留在原地，没有变化。
+
+另请注意，多个变量可能使用相同的 String 引用。这意味着如果我们有两个变量具有完全相同的字符串（例如，"Hello"），它们都将引用相同的字符串对象。
+
+**一些方法：**
+
+**charAt()
+subString(start,end)
+replace()
+split()**
+
+
